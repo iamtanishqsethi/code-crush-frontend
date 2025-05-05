@@ -7,6 +7,8 @@ import Profile from "@/Components/Profile.tsx";
 import Feed from "@/Components/Feed.tsx";
 import {Provider} from "react-redux";
 import appStore from "@/Utils/appStore.ts";
+import { Toaster } from "@/Components/ui/sonner"
+import ProtectedRoute from "@/Components/ProtectedRoute.tsx";
 
 function App() {
     const appRouter=createBrowserRouter([
@@ -20,11 +22,19 @@ function App() {
                 },
                 {
                     path:"/profile",
-                    element:<Profile/>
+                    element:(
+                        <ProtectedRoute>
+                            <Profile/>
+                        </ProtectedRoute>
+                    )
                 },
                 {
                     path:"/feed",
-                    element:<Feed/>
+                    element:(
+                        <ProtectedRoute>
+                            <Feed/>
+                        </ProtectedRoute>
+                    )
                 }
             ]
         },
@@ -37,6 +47,7 @@ function App() {
   return (
       <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
           <Provider store={appStore}>
+                <Toaster duration={3000}/>
               <RouterProvider router={appRouter}></RouterProvider>
           </Provider>
       </ThemeProvider>

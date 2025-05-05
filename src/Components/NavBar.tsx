@@ -4,7 +4,13 @@ import {ModeToggle} from "@/Components/ModeToggle.tsx";
 import {Link} from "react-router"
 import {useSelector} from "react-redux"
 import {Button} from "@/Components/ui/button.tsx";
-import {useNavigate} from "react-router-dom"
+import {useLocation, useNavigate} from "react-router-dom"
+import {useDispatch} from "react-redux"
+import  axios from "axios";
+import {removeUser} from "@/Utils/userSlice.ts";
+import { toast } from "sonner"
+import {useEffect, useState} from "react";
+
 
 type User = {
     firstName: string;
@@ -13,8 +19,38 @@ type User = {
 
 const NavBar=()=>{
     const navigate = useNavigate();
+    const dispatch=useDispatch();
     const user = useSelector((store: { user: User | null }) => store.user)
+    const [isLogin,setIsLogin]=useState<boolean>(false)
 
+    const location = useLocation();
+    const path=location.pathname
+    useEffect(()=>{
+        if(path==="/login"){
+            setIsLogin(true);
+        }
+        else{
+            setIsLogin(false);
+        }
+    },[path])
+
+    const handleLogout = async () => {
+        try{
+            const response=await axios.post("http://localhost:7777/user/logout",null,{
+                withCredentials:true,
+            })
+            console.log(response)
+            dispatch(removeUser())
+
+            toast.success("Logged out successfully.")
+
+
+        }
+        catch(error){
+            console.log(error)
+            toast.error("Something went wrong")
+        }
+    }
 
     return (
         <div className={' fixed top-0 flex items-center justify-between px-10 py-5 z-10 shadow  shadow-zinc-200 dark:shadow-zinc-800 w-screen'}>
@@ -22,7 +58,7 @@ const NavBar=()=>{
             <div className={'flex items-center justify-end space-x-6'}>
                 {user && <h1 className={'font-medium'}>Hello ,{user?.firstName}</h1>}
                 <ModeToggle/>
-                {!user && <Button
+                {!user && !isLogin &&  <Button
                     className={"cursor-pointer"}
                     onClick={()=>navigate("/login")}>Login</Button>}
                 {user && <DropdownMenu >
@@ -49,7 +85,7 @@ const NavBar=()=>{
                         <DropdownMenuItem>
                             Request
                         </DropdownMenuItem>
-                        <DropdownMenuItem>
+                        <DropdownMenuItem onClick={handleLogout} className={'cursor-pointer'}>
                             Logout
                         </DropdownMenuItem>
                     </DropdownMenuContent>

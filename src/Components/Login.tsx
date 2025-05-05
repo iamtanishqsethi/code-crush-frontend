@@ -8,6 +8,8 @@ import  axios from "axios";
 import {useDispatch} from "react-redux";
 import {useNavigate} from "react-router-dom";
 import {addUser} from "@/Utils/userSlice.ts";
+import { toast } from "sonner"
+import NavBar from "@/Components/NavBar.tsx";
 
 const Login=()=>{
 
@@ -30,14 +32,16 @@ const Login=()=>{
             },{
                 withCredentials:true,
             })
-            setMessage("Login successful!")
+            // setMessage("Login successful!")
             dispatch(addUser(response?.data))
             navigate("/feed")
             console.log(response)
+            toast.success("Login successful!")
         }
         catch(err){
-            setMessage("Something went wrong")
+            // setMessage("Something went wrong")
             console.log(err)
+            toast.error("Something went wrong")
         }
 
     }
@@ -54,15 +58,20 @@ const Login=()=>{
             dispatch(addUser(response?.data))
             navigate("/profile")
             console.log(response)
+            toast.message("SignUp successful!",{
+                description:"Complete Profile Details "
+            })
 
         }catch(err){
-            setMessage("Something went wrong")
+            // setMessage("Something went wrong")
             console.log(err)
+            toast.error("Something went wrong")
         }
     }
 
     return (
         <div className={'flex flex-col items-center justify-center space-y-8 h-screen'}>
+            <NavBar/>
             <h1 className={'text-2xl font-medium'}>{tabValue==="login"?"Welcome Back to CodeCrush!!":"Welcome to CodeCrush!!"}</h1>
             <Tabs value={tabValue} onValueChange={setTabValue} className="w-[400px]">
                 <TabsContent value="login">
