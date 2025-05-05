@@ -10,6 +10,7 @@ import {useNavigate} from "react-router-dom";
 import {addUser} from "@/Utils/userSlice.ts";
 import { toast } from "sonner"
 import NavBar from "@/Components/NavBar.tsx";
+import {BASE_URL} from "@/Utils/constants.ts";
 
 const Login=()=>{
 
@@ -26,7 +27,7 @@ const Login=()=>{
     const handleLogin=async()=>{
 
         try{
-            const response=await axios.post("http://localhost:7777/user/login",{
+            const response=await axios.post(BASE_URL+"/user/login",{
                 emailId,
                 password,
             },{
@@ -47,7 +48,7 @@ const Login=()=>{
     }
     const handleSignup=async()=>{
         try{
-            const response=await axios.post("http://localhost:7777/user/signUp",{
+            const response=await axios.post(BASE_URL+"/user/signUp",{
                 firstName,
                 emailId,
                 password,

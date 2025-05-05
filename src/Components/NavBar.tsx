@@ -10,6 +10,8 @@ import  axios from "axios";
 import {removeUser} from "@/Utils/userSlice.ts";
 import { toast } from "sonner"
 import {useEffect, useState} from "react";
+import {removeFeed} from "@/Utils/feedSlice.ts";
+import {BASE_URL} from "@/Utils/constants.ts";
 
 
 type User = {
@@ -36,12 +38,12 @@ const NavBar=()=>{
 
     const handleLogout = async () => {
         try{
-            const response=await axios.post("http://localhost:7777/user/logout",null,{
+            const response=await axios.post(BASE_URL+"/user/logout",null,{
                 withCredentials:true,
             })
             console.log(response)
             dispatch(removeUser())
-
+            dispatch(removeFeed())
             toast.success("Logged out successfully.")
 
 

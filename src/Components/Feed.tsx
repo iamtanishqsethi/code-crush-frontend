@@ -3,6 +3,7 @@ import {useDispatch,useSelector} from "react-redux";
 import {addFeed} from "@/Utils/feedSlice.ts";
 import {useEffect} from "react";
 import FeedCard from "@/Components/FeedCard.tsx";
+import {BASE_URL} from "@/Utils/constants.ts";
 
 type Feed={
     _id:string
@@ -20,10 +21,8 @@ const Feed=()=>{
     const getFeed=async ()=>{
         try{
             if(feed) return;
-            const response=await axios.get("http://localhost:7777/api/user/feed",{withCredentials:true});
+            const response=await axios.get(BASE_URL+"/api/user/feed",{withCredentials:true});
             dispatch(addFeed(response.data));
-            console.log(response.data);
-
         }
         catch (error){
             console.log(error)
