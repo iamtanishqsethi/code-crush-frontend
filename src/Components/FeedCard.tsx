@@ -33,7 +33,7 @@ const FeedCard = ({ item }: FeedCardProps) => {
                     {item.about}
                 </p>
                 {item.skills &&
-                    <div className={'flex w-full items-center space-x-2  space-y-2 flex-wrap my-1.5'}>
+                    <div className={'flex w-full itexms-center space-x-2  space-y-2 flex-wrap my-1.5'}>
                         {item.skills.map((skill,index)=>(
                         <Badge className={"rounded-lg"} key={index}>{skill}</Badge>
                         ))}
