@@ -28,12 +28,12 @@ const FeedCard = ({ item }: FeedCardProps) => {
             </div>
             <CardContent className="p-3">
                 <h1 className="text-2xl font-bold mb-1">{item.firstName} {item.lastName ? item.lastName:""}</h1>
-                <h2>{item.age? item.age:""}</h2>
+                <h2>{item.age? item.age:""}  {item.gender ? item.gender :""}</h2>
                 <p className="text-sm text-gray-300">
                     {item.about}
                 </p>
                 {item.skills &&
-                    <div className={'flex w-full items-center space-x-2 flex-wrap my-1.5'}>
+                    <div className={'flex w-full items-center space-x-2  space-y-2 flex-wrap my-1.5'}>
                         {item.skills.map((skill,index)=>(
                         <Badge className={"rounded-lg"} key={index}>{skill}</Badge>
                         ))}

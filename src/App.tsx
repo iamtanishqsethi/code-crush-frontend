@@ -9,6 +9,8 @@ import {Provider} from "react-redux";
 import appStore from "@/Utils/appStore.ts";
 import { Toaster } from "@/Components/ui/sonner"
 import ProtectedRoute from "@/Components/ProtectedRoute.tsx";
+import Connections from "@/Components/Connections.tsx";
+import Requests from "@/Components/Requests.tsx";
 
 function App() {
     const appRouter=createBrowserRouter([
@@ -33,6 +35,22 @@ function App() {
                     element:(
                         <ProtectedRoute>
                             <Feed/>
+                        </ProtectedRoute>
+                    )
+                },
+                {
+                    path:"/connections",
+                    element:(
+                        <ProtectedRoute>
+                            <Connections/>
+                        </ProtectedRoute>
+                    )
+                },
+                {
+                    path:"/requests",
+                    element:(
+                        <ProtectedRoute>
+                            <Requests/>
                         </ProtectedRoute>
                     )
                 }

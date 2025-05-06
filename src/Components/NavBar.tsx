@@ -81,12 +81,16 @@ const NavBar=()=>{
                             Feed
                              </DropdownMenuItem>
                         </Link>
-                        <DropdownMenuItem>
+                        <Link to={"/connections"}>
+                            <DropdownMenuItem>
                             Connections
-                        </DropdownMenuItem>
-                        <DropdownMenuItem>
+                            </DropdownMenuItem>
+                        </Link>
+                        <Link to={"/requests"}>
+                            <DropdownMenuItem>
                             Request
-                        </DropdownMenuItem>
+                            </DropdownMenuItem>
+                        </Link>
                         <DropdownMenuItem onClick={handleLogout} className={'cursor-pointer'}>
                             Logout
                         </DropdownMenuItem>
