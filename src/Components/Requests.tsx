@@ -6,6 +6,7 @@ import {addRequests} from "@/Utils/requestSlice.ts";
 import {Skeleton} from "@/Components/ui/skeleton.tsx";
 import RequestItem from "@/Components/RequestItem.tsx";
 import EmptyRequests from "@/Components/EmptyRequests.tsx";
+import {toast} from "sonner";
 
 type Request={
     fromUserId:{
@@ -15,6 +16,7 @@ type Request={
         photoUrl: string
         _id: string
     }
+    _id:string
 
 }
 
@@ -37,6 +39,20 @@ const Requests=()=>{
     useEffect(() => {
         fetchRequests()
     }, []);
+
+
+    const reviewRequest=async (status:string,requestId:string)=>{
+        try{
+            const response=await axios.post(BASE_URL+`/api/request/review/${status}/${requestId}`,null,{withCredentials:true})
+            if(response.status === 200){
+                fetchRequests()
+                toast.success("Request "+status)
+            }
+        }catch(error){
+            console.error(error)
+            toast.error("Error Reviewing Request")
+        }
+    }
 
     const requests=useSelector((store:{requests:Request[]|null})=>store.requests)
 
@@ -75,6 +91,8 @@ const Requests=()=>{
                         photoUrl={request.fromUserId.photoUrl}
                         _id={request.fromUserId._id}
                         about={request.fromUserId.about}
+                        handleClick={reviewRequest}
+                        requestId={request._id}
                     />
                 ))}
             </div>
