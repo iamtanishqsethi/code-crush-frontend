@@ -4,8 +4,9 @@ import {Button} from "@/Components/ui/button.tsx";
 import { Pencil } from 'lucide-react';
 import { CardDescription, } from "@/Components/ui/card.tsx";
 import {useSelector} from "react-redux";
-import { useState} from "react";
+import { useState ,useEffect} from "react";
 import EditProfile from "@/Components/EditProfile.tsx";
+import useFetchUser from "@/Utils/useFetchUser.ts";
 
 type User = {
     firstName: string;
@@ -21,6 +22,12 @@ type User = {
 const Profile=()=>{
 
     const [isEditPage, setIsEditPage] = useState<boolean>(false)
+    const fetchUser=useFetchUser()
+
+
+    useEffect(()=>{
+        fetchUser()
+    },[isEditPage])
 
     const user=useSelector((store:{user:User|null})=>store.user)
     if (!user) return null;
@@ -35,7 +42,7 @@ const Profile=()=>{
                         className={'absolute right-10 top-24  bg-zinc-300/30 text-black hover:bg-zinc-300 dark:bg-zinc-700/30 dark:text-white'}>
                         <Pencil/> Edit Profile
                     </Button>
-                    <Avatar className={"w-32 h-32"}>
+                    <Avatar className={"w-32 h-32 border"}>
                         <AvatarImage src={photoUrl} alt="@shadcn" />
                         <AvatarFallback>{firstName}</AvatarFallback>
                     </Avatar>

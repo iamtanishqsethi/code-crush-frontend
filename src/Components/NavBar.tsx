@@ -56,9 +56,9 @@ const NavBar=()=>{
 
     return (
         <div className={' fixed top-0 flex items-center justify-between px-10 py-5 z-10 shadow  shadow-zinc-200 dark:shadow-zinc-800 w-screen'}>
-            <Link to={"/"}><h1 className={'text-2xl'}>CodeCrush</h1></Link>
+            <Link to={"/"}><h1 className={'text-2xl italic font-medium'}>{"<"}CodeCrush{"/>"}</h1></Link>
             <div className={'flex items-center justify-end space-x-6'}>
-                {user && <h1 className={'font-medium'}>Hello ,{user?.firstName}</h1>}
+                {user && <h1 className={'font-medium hidden md:block'}>Hello , {user?.firstName}</h1>}
                 <ModeToggle/>
                 {!user && !isLogin &&  <Button
                     className={"cursor-pointer"}

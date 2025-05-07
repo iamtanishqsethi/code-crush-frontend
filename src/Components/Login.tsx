@@ -44,7 +44,7 @@ const Login=()=>{
         catch(err){
             // setMessage("Something went wrong")
             console.log(err)
-            toast.error("Something went wrong")
+            toast.error(err.response.data)
         }
 
     }
@@ -68,7 +68,7 @@ const Login=()=>{
         }catch(err){
             // setMessage("Something went wrong")
             console.log(err)
-            toast.error("Something went wrong")
+            toast.error(err.response.data)
         }
     }
 

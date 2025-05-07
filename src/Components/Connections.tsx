@@ -62,7 +62,7 @@ const Connections=()=>{
             {connections?.length === 0 ? (
                 <EmptyConnections />
             ) : (
-                <div className="flex flex-col items-center space-y-8 py-4">
+                <div className="flex flex-col items-center space-y-8 py-4 ">
                     {connections.map((connection) => (
                         <ConnectionItem
                             key={connection._id}
