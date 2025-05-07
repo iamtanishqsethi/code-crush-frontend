@@ -1,4 +1,3 @@
-import { Button } from "./ui/button"
 import {Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle,} from "./ui/card"
 import { Input } from "./ui/input"
 import { Label } from "./ui/label"
@@ -11,11 +10,14 @@ import {addUser} from "@/Utils/userSlice.ts";
 import { toast } from "sonner"
 import NavBar from "@/Components/NavBar.tsx";
 import {BASE_URL} from "@/Utils/constants.ts";
-
+import { MagicCard } from "@/Components/magicui/magic-card";
+import {useTheme} from "@/Components/Theme-Provider.tsx";
+import { InteractiveHoverButton } from "@/Components/magicui/interactive-hover-button"
 const Login=()=>{
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const { theme } = useTheme();
 
     const [tabValue,setTabValue]=useState<string>("login")
     const [emailId,setEmailId]=useState<string>("")
@@ -71,12 +73,12 @@ const Login=()=>{
     }
 
     return (
-        <div className={'flex flex-col items-center justify-center space-y-8 h-screen'}>
+        <div className={'flex flex-col items-center justify-center space-y-8 h-screen pt-20'}>
             <NavBar/>
-            <h1 className={'text-2xl font-medium'}>{tabValue==="login"?"Welcome Back to CodeCrush!!":"Welcome to CodeCrush!!"}</h1>
             <Tabs value={tabValue} onValueChange={setTabValue} className="w-[400px]">
                 <TabsContent value="login">
-                    <Card>
+                    <Card className={'p-0'}>
+                        <MagicCard className={'w-full h-full  py-10'} gradientColor={theme === "dark" ? "#252525" : "#D9D9D955"}>
                         <CardHeader className={''}>
                             <CardTitle className={'text-2xl font-medium '}>LogIn</CardTitle>
                             <CardDescription>
@@ -107,14 +109,19 @@ const Login=()=>{
                             </CardDescription>
                         </CardContent>
                         <CardFooter>
-                            <Button
+                            <InteractiveHoverButton
                                 onClick={handleLogin}
-                                className={'w-full bg-blue-200 hover:bg-blue-300 hover:cursor-pointer'}>Login</Button>
+                                className={'w-full '}
+                            >
+                                Login
+                            </InteractiveHoverButton>
                         </CardFooter>
+                        </MagicCard>
                     </Card>
                 </TabsContent>
                 <TabsContent value="signup">
-                    <Card>
+                    <Card className={'p-0'}>
+                        <MagicCard className={'py-10'} gradientColor={theme === "dark" ? "#252525" : "#D9D9D955"}>
                         <CardHeader>
                             <CardTitle className={'text-2xl font-medium '}>SignUp</CardTitle>
                         </CardHeader>
@@ -157,10 +164,13 @@ const Login=()=>{
                             </CardDescription>
                         </CardContent>
                         <CardFooter>
-                            <Button
+                            <InteractiveHoverButton
                                 onClick={handleSignup}
-                                className={'w-full bg-blue-200 hover:bg-blue-300 hover:cursor-pointer'}>SignUp</Button>
+                                className={'w-full '}
+                            >SignUp
+                            </InteractiveHoverButton>
                         </CardFooter>
+                        </MagicCard>
                     </Card>
                 </TabsContent>
                 <TabsList className="grid w-full grid-cols-2">
