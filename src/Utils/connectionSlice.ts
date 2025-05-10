@@ -1,10 +1,17 @@
 import {createSlice} from "@reduxjs/toolkit";
 import type { PayloadAction } from '@reduxjs/toolkit'
+
+type Connection={
+    firstName: string
+    lastName?:string
+    photoUrl: string
+    _id: string
+}
 const connectionSlice = createSlice({
     name: "connections",
-    initialState:null,
+    initialState:null as Connection[] | null,
     reducers:{
-        addConnections:(state,action:PayloadAction)=>{
+        addConnections:(_state,action:PayloadAction)=>{
             return action.payload;
         },
         removeConnections:()=>{

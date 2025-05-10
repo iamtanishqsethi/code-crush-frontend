@@ -43,8 +43,11 @@ const Login=()=>{
         }
         catch(err){
             // setMessage("Something went wrong")
-            console.log(err)
-            toast.error(err.response.data)
+            if (axios.isAxiosError(err)) {
+                toast.error(err.response?.data?.message || "Signup failed");
+            } else {
+                toast.error("Internal server error");
+            }
         }
 
     }
@@ -67,8 +70,11 @@ const Login=()=>{
 
         }catch(err){
             // setMessage("Something went wrong")
-            console.log(err)
-            toast.error(err.response.data)
+            if (axios.isAxiosError(err)) {
+                toast.error(err.response?.data?.message || "Signup failed");
+            } else {
+                toast.error("Internal server error");
+            }
         }
     }
 
