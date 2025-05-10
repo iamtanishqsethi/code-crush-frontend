@@ -22,7 +22,7 @@ const Landing = () => {
                         <TextAnimate animation="slideLeft" by="word">
                             Find Your Perfect
                         </TextAnimate>{" "}
-                        <AuroraText className="italic">{'<Dev Match/>'}</AuroraText>
+                        <AuroraText className="italic">{'<Dev. Match/>'}</AuroraText>
                     </h1>
 
                     <h1 className="text-balance text-lg leading-none sm:text-xl md:text-2xl">

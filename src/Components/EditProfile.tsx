@@ -92,14 +92,14 @@ const EditProfile=({user,setEdit}:EditProfileProps)=>{
     }
 
     return (
-        <>
+        <div className={'min-h-screen w-full'}>
             <Button
                 onClick={handleUpdate}
                 className={'absolute right-10  top-24  bg-zinc-300/30 text-black hover:bg-zinc-300 dark:bg-zinc-700/30 dark:text-white'}>
                 <Check/> Update Profile
             </Button>
-            <div className={'h-full flex items-center justify-between w-full px-24 py-8 '}>
-                <div className={'h-full w-[48%] bg-zinc-700/30 rounded-lg p-4 '}>
+            <div className={'h-full flex flex-col md:flex-row items-center justify-between w-full px-4 space-y-4 md:space-y-0 md:px-20 py-8 '}>
+                <div className={'w-full  h-[48%] md:h-full md:w-[49%] bg-zinc-700/30 rounded-lg p-4 '}>
                     <CardHeader className={'text-center'}>
                         <CardTitle className={'text-2xl font-medium '}>Update Profile</CardTitle>
                     </CardHeader>
@@ -181,7 +181,7 @@ const EditProfile=({user,setEdit}:EditProfileProps)=>{
 
 
                 </div>
-                <div className={'h-full w-[48%] bg-zinc-700/30 rounded-lg flex flex-col items-center justify-center space-y-4'}>
+                <div className={'w-full h-[50%] md:h-full md:w-[49%] py-5 bg-zinc-700/30 rounded-lg flex flex-col items-center justify-center space-y-4'}>
                     <img src={photoUrlValue} alt={"profile photo"}
                          className={'w-72 h-72 rounded-lg'}
                     />
@@ -219,7 +219,7 @@ const EditProfile=({user,setEdit}:EditProfileProps)=>{
                     )}
                 </div>
             </div>
-        </>
+        </div>
     )
 }
 export default EditProfile;

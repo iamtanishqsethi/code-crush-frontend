@@ -2,7 +2,7 @@ import { GithubIcon, Heart, TwitterIcon } from "lucide-react";
 
 const Footer = () => {
     return (
-        <footer className="w-full flex flex-col items-center justify-center bg-black/50 backdrop-blur-sm text-white py-6 md:py-8">
+        <footer className="bottom-0  w-full flex flex-col items-center justify-center bg-black/50 backdrop-blur-sm text-white py-6 md:py-8">
             <div className="flex items-center gap-2 font-bold text-sm md:text-lg">
                 Built with <Heart className="text-red-500 h-4 w-4 md:h-5 md:w-5 " fill="currentColor" /> by Tanishq Sethi
             </div>

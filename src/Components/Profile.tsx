@@ -34,7 +34,7 @@ const Profile=()=>{
     const {firstName, lastName, emailId ,age,gender,photoUrl,about,skills=[]} = user
 
     return (
-        <div className={'flex flex-col items-center  h-screen pt-28 relative'}>
+        <div className={'flex flex-col items-center  min-h-screen pt-28 relative'}>
             {!isEditPage ? (
                 <>
                     <Button
