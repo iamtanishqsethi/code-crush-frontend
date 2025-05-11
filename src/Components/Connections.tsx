@@ -6,6 +6,7 @@ import {addConnections} from "@/Utils/connectionSlice.ts";
 import { Skeleton } from "@/Components/ui/skeleton"
 import EmptyConnections from "@/Components/EmptyConnections.tsx";
 import ConnectionItem from "@/Components/ConnectionItem.tsx";
+import {Link} from "react-router";
 
 
 type Connection={
@@ -64,13 +65,14 @@ const Connections=()=>{
             ) : (
                 <div className="flex flex-col items-center space-y-8 py-4 ">
                     {connections.map((connection) => (
-                        <ConnectionItem
-                            key={connection._id}
+                        <Link to ={`/chat/${connection._id}`} key={connection._id}>
+                            <ConnectionItem
                             firstName={connection.firstName}
                             lastName={connection.lastName}
                             photoUrl={connection.photoUrl}
                             _id={connection._id}
                         />
+                        </Link>
                     ))}
                 </div>
             )}

@@ -11,6 +11,7 @@ import { Toaster } from "@/Components/ui/sonner"
 import ProtectedRoute from "@/Components/ProtectedRoute.tsx";
 import Connections from "@/Components/Connections.tsx";
 import Requests from "@/Components/Requests.tsx";
+import Chat from "@/Components/Chat.tsx";
 
 function App() {
     const appRouter=createBrowserRouter([
@@ -51,6 +52,14 @@ function App() {
                     element:(
                         <ProtectedRoute>
                             <Requests/>
+                        </ProtectedRoute>
+                    )
+                },
+                {
+                    path:"/chat/:targetUserId",
+                    element:(
+                        <ProtectedRoute>
+                            <Chat/>
                         </ProtectedRoute>
                     )
                 }
