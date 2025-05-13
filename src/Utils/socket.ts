@@ -6,8 +6,10 @@ export const createSocketConnection=()=>{
     if(location.hostname === 'localhost'){
         return io(BASE_URL)
     }else {
-        return io("/",
-            {transports:["websocket"]})
+        return io(BASE_URL,
+            {
+                transports:["websocket"]
+            })
     }
 
 
