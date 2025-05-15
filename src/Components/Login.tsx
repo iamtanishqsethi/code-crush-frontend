@@ -44,7 +44,8 @@ const Login=()=>{
         catch(err){
             // setMessage("Something went wrong")
             if (axios.isAxiosError(err)) {
-                toast.error(err.response?.data?.message || "Signup failed");
+                console.log(err)
+                toast.error(err.response?.data || "Signup failed");
             } else {
                 toast.error("Internal server error");
             }
@@ -71,7 +72,7 @@ const Login=()=>{
         }catch(err){
             // setMessage("Something went wrong")
             if (axios.isAxiosError(err)) {
-                toast.error(err.response?.data?.message || "Signup failed");
+                toast.error(err.response?.data || "Signup failed");
             } else {
                 toast.error("Internal server error");
             }

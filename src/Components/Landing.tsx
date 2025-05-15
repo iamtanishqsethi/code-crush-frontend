@@ -29,9 +29,9 @@ const Landing = () => {
         },
     ];
     return (
-        <div className="min-h-screen w-screen">
-            <div className="relative min-h-screen w-full pt-20 md:pt-16 flex flex-col items-center justify-center text-center">
-                <div className="absolute inset-0 top-10 flex items-center justify-center overflow-hidden">
+        <div className="min-h-screen w-screen overflow-x-hidden">
+            <div className="relative min-h-screen  pt-18 md:pt-16 flex flex-col items-center justify-center text-center overflow-x-hidden">
+                <div className="absolute inset-0 top-10 flex items-center justify-center">
                     <DotPattern glow={true} className={cn(
                         "[mask-image:radial-gradient(800px_circle_at_center,white,transparent,transparent)]",
                     )}/>
@@ -66,13 +66,13 @@ const Landing = () => {
                     <h1 className="text-4xl md:text-5xl lg:text-6xl font-semibold text-center mb-12 bg-gradient-to-r from-white to-zinc-300 bg-clip-text text-transparent">
                         Features
                     </h1>
-                    <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3 mt-8">
+                    <div className="flex items-center justify-center flex-wrap gap-8 mt-8">
                         {features.map((feature, idx) => {
                             const Icon = feature.icon;
                             return (
                                 <div
                                     key={idx}
-                                    className="group bg-white/5 border border-white/10 backdrop-blur-lg p-8 rounded-2xl transition-all ease-in-out duration-150 hover:scale-[1.02]   shadow-lg flex flex-col items-center"
+                                    className="group bg-white/5 border border-white/10 backdrop-blur-lg p-8 rounded-2xl transition-all ease-in-out duration-150 hover:scale-[1.02]   shadow-lg flex flex-col items-center w-1/3"
                                 >
                                     <div className="flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-zinc-700 to-zinc-900 border border-white/10 mb-6  transition-all ease-in-out duration-150">
                                         <Icon className="w-8 h-8 text-zinc-200 group-hover:text-white" />

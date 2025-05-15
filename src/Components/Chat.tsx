@@ -1,10 +1,14 @@
 import {useParams} from "react-router-dom";
-import {useEffect} from "react";
+import {FormEvent, useEffect} from "react";
 import {useState} from "react";
 import {createSocketConnection} from "@/Utils/socket.ts";
 import {useSelector} from "react-redux";
 import axios from "axios";
 import {BASE_URL} from "@/Utils/constants.ts";
+import {Avatar, AvatarFallback, AvatarImage} from "@/Components/ui/avatar.tsx";
+import {Input} from "@/Components/ui/input.tsx";
+import {Send} from "lucide-react";
+import {toast} from "sonner";
 
 
 type User = {
@@ -38,6 +42,9 @@ const Chat=()=>{
     const { targetUserId } = useParams();
     const [newMessage,setNewMessage]=useState("");
     const [messages, setMessages] = useState<ChatObj[]>([]);
+    // const [isOnline,setIsOnline]=useState(false);
+    // const [isTyping,setIsTyping]=useState(false);
+    const [targetUserData,setTargetUserData]=useState<User>()
 
 
     const fetchChatMessages = async () => {
@@ -66,6 +73,13 @@ const Chat=()=>{
                     }]
                 )
             })
+            // socket.on("online",({userId})=>{
+            //     if(userId===targetUserId){
+            //         console.log(userId)
+            //         setIsOnline(true);
+            //     }
+            //
+            // })
 
             return ()=>{
                 socket.disconnect()
@@ -74,9 +88,23 @@ const Chat=()=>{
 
     }, [user, targetUserId]);
 
+    const fetchTargetUser=async ()=>{
+        const response=await axios.get(BASE_URL+"/api/user/find/"+targetUserId,{withCredentials:true});
+        setTargetUserData(response.data);
+    }
+    useEffect(() => {
+        if(targetUserId){
+            fetchTargetUser()
+        }
+    }, [targetUserId]);
+
     if (!user?._id) return null;
 
     const sendMessage=()=>{
+        if(newMessage===""){
+            toast.error("Please enter a valid message");
+            return
+        }
         const socket=createSocketConnection()
         socket.emit("sendMessage",{
             firstName:user.firstName,
@@ -90,26 +118,70 @@ const Chat=()=>{
     }
 
     return (
-        <div className="w-1/2 mx-auto border border-gray-600 m-5 h-[70vh] flex flex-col mt-20">
-            <h1 className="p-5 border-b border-gray-600">Chat</h1>
-            <div className="flex-1 overflow-scroll">{
-                messages.map((message,index)=>(
-                    <div
-                        key={index}
-                    >{message.senderId.firstName} {message.senderId.lastName ? message.senderId.lastName :""} {message.text}</div>
-                ))
-            }</div>
-            <div className="p-5 border-t border-gray-600 flex items-center gap-2">
-                <input className="w-full border "
-                       value={newMessage}
-                       onChange={(e)=>setNewMessage(e.target.value)}
+        <div className={'flex flex-col items-center justify-center w-full md:px-8'}>
+            <div className="w-full  border-3 border-zinc-600 rounded-2xl    h-[85vh] flex flex-col mt-20  ">
+                <div className="p-5 border-b-3 border-zinc-600 flex items-center space-x-3">
+                    <Avatar className={"h-10 w-10 border "}>
+                        <AvatarImage src={targetUserData?.photoUrl} alt="@shadcn" />
+                        <AvatarFallback>{targetUserData?.firstName}</AvatarFallback>
+                    </Avatar>
+                    <h1 className={'text-lg font-medium'}>{targetUserData?.firstName}{" "}{targetUserData?.lastName}</h1>
+                    {/*<h1>{isOnline ? "Online":"Offline"}</h1>*/}
+                </div>
+                <div className="flex flex-col overflow-y-scroll  h-[90%]">
+                    {messages.map((message, index) => {
+                        const isCurrentUser = message.senderId._id === user._id;
+                        return (
+                            <div
+                                key={index}
+                                className={`flex ${isCurrentUser ? 'justify-end ' : 'justify-start'} my-2`}
+                            >
+                                <div className={`flex ${isCurrentUser ? 'flex-row-reverse ' : ''} items-center`}>
+                                    <Avatar className={"h-8 w-8 border mx-2"}>
+                                        <AvatarImage src={message.senderId?.photoUrl} alt="@shadcn" />
+                                        <AvatarFallback>{message.senderId?.firstName}</AvatarFallback>
+                                    </Avatar>
+                                    <div
+                                        className={`max-w-xs px-4 py-2 rounded-full text-white ${
+                                            isCurrentUser ? 'bg-blue-600 ' : 'bg-zinc-700'
+                                        }`}
+                                    >
 
-                />
-                <button
-                    onClick={sendMessage}
-                >Send</button>
+
+                                        <p>{message.text}</p>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        );
+                    })}</div>
+                <div className="p-5 border-t-3 border-zinc-600 flex items-center gap-2">
+                    <form className="flex items-center gap-2 w-full"
+                    onSubmit={(e:FormEvent<HTMLFormElement>) => {
+                        e.preventDefault();
+                        sendMessage()
+                    }}>
+                        <Input className=""
+                               value={newMessage}
+                               onChange={(e)=>{
+                                   const socket=createSocketConnection()
+                                   socket.emit("typing")
+                                   setNewMessage(e.target.value)
+                               }
+                        }
+
+                        />
+                        <button
+                            className={'bg-blue-700 p-2.5 rounded-full'}
+                            onClick={sendMessage}
+                        ><Send/></button>
+                    </form>
+
+                </div>
             </div>
         </div>
+
     )
 }
 export default Chat

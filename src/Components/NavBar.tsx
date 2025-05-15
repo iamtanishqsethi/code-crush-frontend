@@ -13,6 +13,8 @@ import {useEffect, useState} from "react";
 import {removeFeed} from "@/Utils/feedSlice.ts";
 import {BASE_URL} from "@/Utils/constants.ts";
 
+import {Flame} from "lucide-react";
+
 
 type User = {
     firstName: string;
@@ -56,7 +58,11 @@ const NavBar=()=>{
 
     return (
         <div className={' fixed top-0 flex items-center justify-between px-10 py-5 z-40  w-screen backdrop-blur-2xl'}>
-            <Link to={"/"}><h1 className={' text-lg md:text-2xl italic font-medium'}>{"<"}CodeCrush{"/>"}</h1></Link>
+            <Link to={"/"}>
+                <div className={' text-lg md:text-2xl  font-medium flex items-center justify-center'}>
+                    <Flame className={"text-amber-500 h-5 w-5 md:h-8 md:w-8"} fill={"currentColor"}/>CodeCrush
+                </div>
+            </Link>
             <div className={'flex items-center justify-end space-x-6'}>
                 {user && <h1 className={'font-medium hidden md:block'}>Hello , {user?.firstName}</h1>}
 
@@ -65,7 +71,7 @@ const NavBar=()=>{
                     onClick={()=>navigate("/login")}>Login</Button>}
                 {user && <DropdownMenu >
                     <DropdownMenuTrigger asChild>
-                        <Avatar className={"hover:cursor-pointer"}>
+                        <Avatar className={"hover:cursor-pointer border"}>
                             <AvatarImage src={user?.photoUrl} alt="@shadcn" />
                             <AvatarFallback>{user?.firstName}</AvatarFallback>
                         </Avatar>
