@@ -1,6 +1,6 @@
 import {Avatar, AvatarFallback, AvatarImage,} from "./ui/avatar"
 import {DropdownMenu, DropdownMenuContent, DropdownMenuItem,DropdownMenuTrigger,} from "./ui/dropdown-menu.tsx"
-import {ModeToggle} from "@/Components/ModeToggle.tsx";
+
 import {Link} from "react-router"
 import {useSelector} from "react-redux"
 import {Button} from "@/Components/ui/button.tsx";
@@ -59,9 +59,9 @@ const NavBar=()=>{
             <Link to={"/"}><h1 className={' text-lg md:text-2xl italic font-medium'}>{"<"}CodeCrush{"/>"}</h1></Link>
             <div className={'flex items-center justify-end space-x-6'}>
                 {user && <h1 className={'font-medium hidden md:block'}>Hello , {user?.firstName}</h1>}
-                <ModeToggle/>
+
                 {!user && !isLogin &&  <Button
-                    className={"cursor-pointer"}
+                    className={"cursor-pointer rounded-full"}
                     onClick={()=>navigate("/login")}>Login</Button>}
                 {user && <DropdownMenu >
                     <DropdownMenuTrigger asChild>
