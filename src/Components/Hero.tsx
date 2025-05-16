@@ -21,7 +21,7 @@ const Hero=()=>{
                     ⚡ Connect with Code
                 </ShinyButton>
                 <h1 className="text-balance text-5xl font-bold sm:text-6xl md:text-8xl  leading-[1.2] bg-gradient-to-br from-white via-zinc-200 to-zinc-400 bg-clip-text text-transparent">
-                    <TextAnimate animation="slideLeft" by="character">
+                    <TextAnimate animation="slideLeft" by="word">
                         CodeCrush is the new way
                         to find your coding partner!
                     </TextAnimate>
