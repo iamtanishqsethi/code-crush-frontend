@@ -1,5 +1,5 @@
 import {useParams} from "react-router-dom";
-import {FormEvent, useEffect} from "react";
+import {FormEvent, RefObject, useEffect, useRef} from "react";
 import {useState} from "react";
 import {createSocketConnection} from "@/Utils/socket.ts";
 import {useSelector} from "react-redux";
@@ -32,11 +32,9 @@ type ChatObj={
         _id:string
     }
     text:string,
-
 }
 
 const Chat=()=>{
-
 
     const user = useSelector((store: { user: User | null }) => store.user);
     const { targetUserId } = useParams();
@@ -45,7 +43,14 @@ const Chat=()=>{
     // const [isOnline,setIsOnline]=useState(false);
     // const [isTyping,setIsTyping]=useState(false);
     const [targetUserData,setTargetUserData]=useState<User>()
+    const lastMessageRef = useRef<HTMLDivElement | null>(null);
 
+
+    const handleScroll = (ref: RefObject<HTMLDivElement | null>) => {
+        if (ref.current) {
+            ref.current.scrollIntoView({ behavior: "smooth" });
+        }
+    }
 
     const fetchChatMessages = async () => {
         const response=await axios.get(`${BASE_URL}/api/chat/${targetUserId}`,{withCredentials:true})
@@ -63,23 +68,16 @@ const Chat=()=>{
 
             socket.on("newMessageReceived",({firstName,lastName,photoUrl,text,_id})=>{
                 setMessages((prevState)=>[...prevState,{
-                    senderId:{
-                        firstName,
-                        lastName,
-                        photoUrl,
-                        _id
-                    },
-                    text
+                        senderId:{
+                            firstName,
+                            lastName,
+                            photoUrl,
+                            _id
+                        },
+                        text
                     }]
                 )
             })
-            // socket.on("online",({userId})=>{
-            //     if(userId===targetUserId){
-            //         console.log(userId)
-            //         setIsOnline(true);
-            //     }
-            //
-            // })
 
             return ()=>{
                 socket.disconnect()
@@ -88,10 +86,16 @@ const Chat=()=>{
 
     }, [user, targetUserId]);
 
+
+    useEffect(() => {
+        handleScroll(lastMessageRef);
+    }, [messages]);
+
     const fetchTargetUser=async ()=>{
         const response=await axios.get(BASE_URL+"/api/user/find/"+targetUserId,{withCredentials:true});
         setTargetUserData(response.data);
     }
+
     useEffect(() => {
         if(targetUserId){
             fetchTargetUser()
@@ -119,7 +123,7 @@ const Chat=()=>{
 
     return (
         <div className={'flex flex-col items-center justify-center w-full md:px-8'}>
-            <div className="w-full  border-3 border-zinc-600 rounded-2xl    h-[85vh] flex flex-col mt-20  ">
+            <div className="w-full  border-3 border-zinc-600 rounded-2xl h-[85vh] flex flex-col mt-20">
                 <div className="p-5 border-b-3 border-zinc-600 flex items-center space-x-3">
                     <Avatar className={"h-10 w-10 border "}>
                         <AvatarImage src={targetUserData?.photoUrl} alt="@shadcn" />
@@ -128,7 +132,7 @@ const Chat=()=>{
                     <h1 className={'text-lg font-medium'}>{targetUserData?.firstName}{" "}{targetUserData?.lastName}</h1>
                     {/*<h1>{isOnline ? "Online":"Offline"}</h1>*/}
                 </div>
-                <div className="flex flex-col overflow-y-scroll  h-[90%]">
+                <div className="flex flex-col overflow-y-scroll h-[90%]">
                     {messages.map((message, index) => {
                         const isCurrentUser = message.senderId._id === user._id;
                         return (
@@ -146,42 +150,37 @@ const Chat=()=>{
                                             isCurrentUser ? 'bg-blue-600 ' : 'bg-zinc-700'
                                         }`}
                                     >
-
-
                                         <p>{message.text}</p>
                                     </div>
                                 </div>
-
-
                             </div>
                         );
-                    })}</div>
+                    })}
+                    <div ref={lastMessageRef}></div>
+                </div>
                 <div className="p-5 border-t-3 border-zinc-600 flex items-center gap-2">
                     <form className="flex items-center gap-2 w-full"
-                    onSubmit={(e:FormEvent<HTMLFormElement>) => {
-                        e.preventDefault();
-                        sendMessage()
-                    }}>
+                          onSubmit={(e:FormEvent<HTMLFormElement>) => {
+                              e.preventDefault();
+                              sendMessage()
+                          }}>
                         <Input className=""
                                value={newMessage}
                                onChange={(e)=>{
                                    const socket=createSocketConnection()
                                    socket.emit("typing")
                                    setNewMessage(e.target.value)
-                               }
-                        }
-
+                               }}
                         />
                         <button
                             className={'bg-blue-700 p-2.5 rounded-full'}
-                            onClick={sendMessage}
+                            // onClick={sendMessage}
+                            type={"submit"}
                         ><Send/></button>
                     </form>
-
                 </div>
             </div>
         </div>
-
     )
 }
 export default Chat

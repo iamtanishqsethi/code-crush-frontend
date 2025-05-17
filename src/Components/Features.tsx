@@ -30,7 +30,7 @@ const Features=()=>{
                         return (
                         <div
                             key={idx}
-                            className="group bg-white/5 border border-white/10 backdrop-blur-lg p-8 rounded-2xl transition-all ease-in-out duration-150 hover:scale-[1.02]   shadow-lg flex flex-col items-center w-1/3"
+                            className="group bg-white/5 border border-white/10 backdrop-blur-lg p-8 rounded-2xl transition-all ease-in-out duration-150 hover:scale-[1.02]   shadow-lg flex flex-col items-center w-300 md:w-1/3"
                         >
                             <div className="flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-zinc-700 to-zinc-900 border border-white/10 mb-6  transition-all ease-in-out duration-150">
                                 <Icon className="w-8 h-8 text-zinc-200 group-hover:text-white" />

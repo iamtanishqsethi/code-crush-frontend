@@ -39,8 +39,8 @@ const Profile=()=>{
                 <>
                     <Button
                         onClick={() => setIsEditPage(true)}
-                        className={'absolute right-10 top-24  bg-zinc-300/30 text-black hover:bg-zinc-300 dark:bg-zinc-700/30 dark:text-white'}>
-                        <Pencil/> Edit Profile
+                        className={'absolute right-10 top-24  bg-zinc-300/30 text-black hover:bg-zinc-300 dark:bg-zinc-700/30 dark:text-white z-20'}>
+                        <Pencil/> <span className={'hidden md:block'}>Edit Profile</span>
                     </Button>
                     <Avatar className={"w-32 h-32 border"}>
                         <AvatarImage src={photoUrl} alt="@shadcn" />
@@ -51,7 +51,7 @@ const Profile=()=>{
                     {age !== undefined && <h2 className="text-lg">{age}{gender ? `, ${gender}` : ""}</h2>}
                     <CardDescription className={'my-2'}>{about}</CardDescription>
 
-                    <div className={'flex w-[50%] items-center justify-center space-x-2 flex-wrap my-1.5'}>
+                    <div className={'flex w-[50%] items-center justify-center space-x-2 space-y-2 md:space-y-0 flex-wrap my-1.5'}>
                         {skills.map((skill,index:number)=>(
                             <Badge className={"rounded-lg"} key={index}>{skill}</Badge>
                         ))}
