@@ -38,7 +38,6 @@ const Login=()=>{
             // setMessage("Login successful!")
             dispatch(addUser(response?.data))
             navigate("/feed")
-            console.log(response)
             toast.success("Login successful!")
         }
         catch(err){
@@ -64,7 +63,6 @@ const Login=()=>{
             setMessage("SignUp successful!")
             dispatch(addUser(response?.data))
             navigate("/profile")
-            console.log(response)
             toast.message("SignUp successful!",{
                 description:"Complete Profile Details "
             })
@@ -82,7 +80,7 @@ const Login=()=>{
     return (
         <div className={'flex flex-col items-center justify-center space-y-8 h-screen pt-20'}>
             <NavBar/>
-            <Tabs value={tabValue} onValueChange={setTabValue} className="w-[400px]">
+            <Tabs value={tabValue} onValueChange={setTabValue} className="w-[380px] md:w-[400px]">
                 <TabsContent value="login">
                     <Card className={'p-0'}>
                         <MagicCard className={'w-full h-full  py-10'} gradientColor={theme === "dark" ? "#252525" : "#D9D9D955"}>
