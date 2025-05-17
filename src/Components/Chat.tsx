@@ -1,5 +1,5 @@
 import {useParams} from "react-router-dom";
-import {FormEvent, RefObject, useEffect, useRef} from "react";
+import {FormEvent, useEffect, useRef} from "react";
 import {useState} from "react";
 import {createSocketConnection} from "@/Utils/socket.ts";
 import {useSelector} from "react-redux";
@@ -10,50 +10,47 @@ import {Input} from "@/Components/ui/input.tsx";
 import {Send} from "lucide-react";
 import {toast} from "sonner";
 
-
 type User = {
     firstName: string;
-    lastName?:string
-    emailId:string
-    age?:number
-    gender?:string
+    lastName?: string
+    emailId: string
+    age?: number
+    gender?: string
     photoUrl?: string;
-    about?:string
-    skills?:[string]
-    _id:string
+    about?: string
+    skills?: [string]
+    _id: string
 }
 
-
-type ChatObj={
-    senderId:{
-        firstName:string,
-        lastName?:string,
-        photoUrl:string,
-        _id:string
+type ChatObj = {
+    senderId: {
+        firstName: string,
+        lastName?: string,
+        photoUrl: string,
+        _id: string
     }
-    text:string,
+    text: string,
 }
 
-const Chat=()=>{
-
+const Chat = () => {
     const user = useSelector((store: { user: User | null }) => store.user);
     const { targetUserId } = useParams();
-    const [newMessage,setNewMessage]=useState("");
+    const [newMessage, setNewMessage] = useState("");
     const [messages, setMessages] = useState<ChatObj[]>([]);
     // const [isOnline,setIsOnline]=useState(false);
     // const [isTyping,setIsTyping]=useState(false);
-    const [targetUserData,setTargetUserData]=useState<User>()
+    const [targetUserData, setTargetUserData] = useState<User>()
+    const scrollContainerRef = useRef<HTMLDivElement | null>(null);
     const lastMessageRef = useRef<HTMLDivElement | null>(null);
 
-
-    const handleScroll = (ref: RefObject<HTMLDivElement | null>) => {
-        if (ref.current) {
-            ref.current.scrollIntoView({ behavior: "smooth" });
+    const scrollToBottom = () => {
+        if (lastMessageRef.current) {
+            lastMessageRef.current.scrollIntoView({ behavior: "smooth", block: "end" });
         }
     }
 
     const fetchChatMessages = async () => {
-        const response=await axios.get(`${BASE_URL}/api/chat/${targetUserId}`,{withCredentials:true})
+        const response = await axios.get(`${BASE_URL}/api/chat/${targetUserId}`, {withCredentials: true})
         setMessages(response.data.messages)
     }
 
@@ -62,13 +59,13 @@ const Chat=()=>{
     }, []);
 
     useEffect(() => {
-        if(user && targetUserId){
-            const socket=createSocketConnection()
-            socket.emit("joinChat",{userId:user._id,targetUserId,})
+        if (user && targetUserId) {
+            const socket = createSocketConnection()
+            socket.emit("joinChat", {userId: user._id, targetUserId,})
 
-            socket.on("newMessageReceived",({firstName,lastName,photoUrl,text,_id})=>{
-                setMessages((prevState)=>[...prevState,{
-                        senderId:{
+            socket.on("newMessageReceived", ({firstName, lastName, photoUrl, text, _id}) => {
+                setMessages((prevState) => [...prevState, {
+                        senderId: {
                             firstName,
                             lastName,
                             photoUrl,
@@ -79,51 +76,49 @@ const Chat=()=>{
                 )
             })
 
-            return ()=>{
+            return () => {
                 socket.disconnect()
             }
         }
-
     }, [user, targetUserId]);
 
-
     useEffect(() => {
-        handleScroll(lastMessageRef);
+        scrollToBottom();
     }, [messages]);
 
-    const fetchTargetUser=async ()=>{
-        const response=await axios.get(BASE_URL+"/api/user/find/"+targetUserId,{withCredentials:true});
+    const fetchTargetUser = async () => {
+        const response = await axios.get(BASE_URL + "/api/user/find/" + targetUserId, {withCredentials: true});
         setTargetUserData(response.data);
     }
 
     useEffect(() => {
-        if(targetUserId){
+        if (targetUserId) {
             fetchTargetUser()
         }
     }, [targetUserId]);
 
     if (!user?._id) return null;
 
-    const sendMessage=()=>{
-        if(newMessage===""){
+    const sendMessage = () => {
+        if (newMessage === "") {
             toast.error("Please enter a valid message");
             return
         }
-        const socket=createSocketConnection()
-        socket.emit("sendMessage",{
-            firstName:user.firstName,
-            lastName:user.lastName,
-            photoUrl:user.photoUrl,
-            userId:user._id,
+        const socket = createSocketConnection()
+        socket.emit("sendMessage", {
+            firstName: user.firstName,
+            lastName: user.lastName,
+            photoUrl: user.photoUrl,
+            userId: user._id,
             targetUserId,
-            text:newMessage
+            text: newMessage
         })
         setNewMessage("")
     }
 
     return (
         <div className={'flex flex-col items-center justify-center w-full md:px-8'}>
-            <div className="w-full  border-3 border-zinc-600 rounded-2xl h-[85vh] flex flex-col mt-20">
+            <div className="w-full border-3 border-zinc-600 rounded-2xl h-[85vh] flex flex-col mt-20">
                 <div className="p-5 border-b-3 border-zinc-600 flex items-center space-x-3">
                     <Avatar className={"h-10 w-10 border "}>
                         <AvatarImage src={targetUserData?.photoUrl} alt="@shadcn" />
@@ -132,7 +127,10 @@ const Chat=()=>{
                     <h1 className={'text-lg font-medium'}>{targetUserData?.firstName}{" "}{targetUserData?.lastName}</h1>
                     {/*<h1>{isOnline ? "Online":"Offline"}</h1>*/}
                 </div>
-                <div className="flex flex-col overflow-y-scroll h-[90%]">
+                <div
+                    ref={scrollContainerRef}
+                    className="flex flex-col overflow-y-scroll h-[90%] scroll-smooth"
+                >
                     {messages.map((message, index) => {
                         const isCurrentUser = message.senderId._id === user._id;
                         return (
@@ -160,21 +158,20 @@ const Chat=()=>{
                 </div>
                 <div className="p-5 border-t-3 border-zinc-600 flex items-center gap-2">
                     <form className="flex items-center gap-2 w-full"
-                          onSubmit={(e:FormEvent<HTMLFormElement>) => {
+                          onSubmit={(e: FormEvent<HTMLFormElement>) => {
                               e.preventDefault();
                               sendMessage()
                           }}>
                         <Input className=""
                                value={newMessage}
-                               onChange={(e)=>{
-                                   const socket=createSocketConnection()
+                               onChange={(e) => {
+                                   const socket = createSocketConnection()
                                    socket.emit("typing")
                                    setNewMessage(e.target.value)
                                }}
                         />
                         <button
                             className={'bg-blue-700 p-2.5 rounded-full'}
-                            // onClick={sendMessage}
                             type={"submit"}
                         ><Send/></button>
                     </form>
