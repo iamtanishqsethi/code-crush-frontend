@@ -39,7 +39,7 @@ const Connections=()=>{
     const connections=useSelector((store:{connections:Connection[]|null})=>store.connections)
     if(!connections){
         return(
-            <div className={'flex flex-col items-center pt-28 h-screen'}>
+            <div className={'flex flex-col items-center pt-28 min-h-screen'}>
                 <h1 className={'text-3xl font-medium my-2 '}>Connections</h1>
 
                 <div className="flex flex-col items-center space-y-8 py-4">
