@@ -77,7 +77,7 @@ const Requests=()=>{
     }
 
     return (
-    <div className={'flex flex-col items-center pt-28 h-screen'}>
+    <div className={'flex flex-col items-center pt-28 min-h-screen'}>
         <h1 className={'text-3xl font-medium my-2'}>Requests</h1>
         {requests?.length === 0 ? (
             <EmptyRequests />
