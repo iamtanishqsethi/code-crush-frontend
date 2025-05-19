@@ -37,7 +37,7 @@ const Chat = () => {
     const { targetUserId } = useParams();
     const [newMessage, setNewMessage] = useState("");
     const [messages, setMessages] = useState<ChatObj[]>([]);
-    // const [isOnline,setIsOnline]=useState(false);
+    const [isOnline,setIsOnline]=useState(false);
     // const [isTyping,setIsTyping]=useState(false);
     const [targetUserData, setTargetUserData] = useState<User>()
     const scrollContainerRef = useRef<HTMLDivElement | null>(null);
@@ -76,8 +76,16 @@ const Chat = () => {
                 )
             })
 
+            socket.on("userOnlineStatus",({userId,isOnline})=>{
+                if(userId==targetUserId){
+                    setIsOnline(isOnline)
+                }
+            })
+
             return () => {
+                socket.emit("leaveChat",{userId:user._id,targetUserId})
                 socket.disconnect()
+
             }
         }
     }, [user, targetUserId]);
@@ -120,12 +128,21 @@ const Chat = () => {
         <div className={'flex flex-col items-center justify-center w-full md:px-8'}>
             <div className="w-full border-3 border-zinc-600 rounded-2xl h-[85vh] flex flex-col mt-20">
                 <div className="p-5 border-b-3 border-zinc-600 flex items-center space-x-3">
-                    <Avatar className={"h-10 w-10 border "}>
-                        <AvatarImage src={targetUserData?.photoUrl} alt="@shadcn" />
-                        <AvatarFallback>{targetUserData?.firstName}</AvatarFallback>
-                    </Avatar>
+                    <div className="relative">
+                        <Avatar className="h-10 w-10 border">
+                            <AvatarImage src={targetUserData?.photoUrl} alt="@shadcn" />
+                            <AvatarFallback>{targetUserData?.firstName}</AvatarFallback>
+                        </Avatar>
+                        <div
+                            className={`${
+                                isOnline ? "bg-green-600" : "bg-gray-600"
+                            } h-2.5 w-2.5 rounded-full border-2 border-white absolute bottom-0 right-0 translate-x-1/4 translate-y-1/4 z-20`}
+                        ></div>
+                    </div>
+
+
                     <h1 className={'text-lg font-medium'}>{targetUserData?.firstName}{" "}{targetUserData?.lastName}</h1>
-                    {/*<h1>{isOnline ? "Online":"Offline"}</h1>*/}
+
                 </div>
                 <div
                     ref={scrollContainerRef}
