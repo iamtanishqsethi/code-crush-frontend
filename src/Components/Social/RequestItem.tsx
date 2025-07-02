@@ -1,5 +1,5 @@
-import { Avatar, AvatarFallback, AvatarImage } from "@/Components/ui/avatar";
-import {Card, CardDescription} from "@/Components/ui/card";
+import { Avatar, AvatarFallback, AvatarImage } from "@/Components/ui/avatar.tsx";
+import {Card, CardDescription} from "@/Components/ui/card.tsx";
 import {Button} from "@/Components/ui/button.tsx";
 import { UserCheck } from 'lucide-react';
 import { X } from 'lucide-react';

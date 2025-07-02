@@ -1,11 +1,9 @@
 import { JSX, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import {User} from "@/Utils/types.ts";
 
-type User = {
-    firstName: string;
-    photoUrl?: string;
-};
+
 
 const ProtectedRoute = ({ children }: { children: JSX.Element }) => {
     const navigate = useNavigate();

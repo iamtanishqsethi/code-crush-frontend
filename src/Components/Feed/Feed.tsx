@@ -1,27 +1,20 @@
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { addFeed } from "@/Utils/feedSlice.ts";
+import { addFeed } from "@/Utils/slice/feedSlice.ts";
 import { useEffect } from "react";
-import FeedCard from "@/Components/FeedCard.tsx";
+import FeedCard from "@/Components/Feed/FeedCard.tsx";
 import { BASE_URL } from "@/Utils/constants.ts";
-import { Skeleton } from "@/Components/ui/skeleton";
-import { Alert, AlertDescription, AlertTitle } from "@/Components/ui/alert";
+import { Skeleton } from "@/Components/ui/skeleton.tsx";
+import { Alert, AlertDescription, AlertTitle } from "@/Components/ui/alert.tsx";
 import { AlertCircle } from "lucide-react";
-import { Button } from "@/Components/ui/button";
+import { Button } from "@/Components/ui/button.tsx";
+import {User} from "@/Utils/types.ts";
 
-type Feed = {
-    _id: string;
-    firstName: string;
-    lastName?: string;
-    photoUrl?: string;
-    about?: string;
-    skills: [string];
-};
+
 
 const Feed = () => {
     const dispatch = useDispatch()
-    const feed = useSelector((store:{feed:Feed[]|null})=>store.feed)
-    console.log(feed)
+    const feed = useSelector((store:{feed:User[]|null})=>store.feed)
     const getFeed = async () => {
         try {
             if (feed) return;

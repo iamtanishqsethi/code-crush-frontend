@@ -1,6 +1,6 @@
 import {Outlet} from "react-router-dom";
 import NavBar from "@/Components/NavBar.tsx";
-import useFetchUser from "@/Utils/useFetchUser.ts";
+import useFetchUser from "@/Utils/hooks/useFetchUser.ts";
 import {useEffect} from "react";
 import Footer from "@/Components/Footer.tsx";
 

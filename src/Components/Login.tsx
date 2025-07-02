@@ -6,7 +6,7 @@ import {ChangeEvent, useState} from "react";
 import  axios from "axios";
 import {useDispatch} from "react-redux";
 import {useNavigate} from "react-router-dom";
-import {addUser} from "@/Utils/userSlice.ts";
+import {addUser} from "@/Utils/slice/userSlice.ts";
 import { toast } from "sonner"
 import NavBar from "@/Components/NavBar.tsx";
 import {BASE_URL} from "@/Utils/constants.ts";
@@ -24,11 +24,13 @@ const Login=()=>{
     const [password,setPassword]=useState<string>("")
     const [firstName,setFirstName]=useState<string>("")
     const [message,setMessage]=useState<string>("")
+    const [isLoading,setIsLoading]=useState<boolean>(false);
 
 
     const handleLogin=async()=>{
 
         try{
+            setIsLoading(true);
             const response=await axios.post(BASE_URL+"/user/login",{
                 emailId,
                 password,
@@ -49,10 +51,14 @@ const Login=()=>{
                 toast.error("Internal server error");
             }
         }
+        finally {
+            setIsLoading(false);
+        }
 
     }
     const handleSignup=async()=>{
         try{
+            setIsLoading(true);
             const response=await axios.post(BASE_URL+"/user/signUp",{
                 firstName,
                 emailId,
@@ -74,6 +80,9 @@ const Login=()=>{
             } else {
                 toast.error("Internal server error");
             }
+        }
+        finally {
+            setIsLoading(false);
         }
     }
 
@@ -118,7 +127,7 @@ const Login=()=>{
                                 onClick={handleLogin}
                                 className={'w-full '}
                             >
-                                Login
+                                {isLoading?'Loading...':'LogIn'}
                             </InteractiveHoverButton>
                         </CardFooter>
                         </MagicCard>
@@ -172,7 +181,7 @@ const Login=()=>{
                             <InteractiveHoverButton
                                 onClick={handleSignup}
                                 className={'w-full '}
-                            >SignUp
+                            >{isLoading?'Loading...':'SignUp'}
                             </InteractiveHoverButton>
                         </CardFooter>
                         </MagicCard>

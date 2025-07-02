@@ -7,20 +7,11 @@ import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/C
 import {ChangeEvent, Dispatch, SetStateAction, useState} from "react";
 import axios from "axios";
 import {useDispatch} from "react-redux";
-import {addUser} from "@/Utils/userSlice.ts";
+import {addUser} from "@/Utils/slice/userSlice.ts";
 import { toast } from "sonner"
 import {BASE_URL} from "@/Utils/constants.ts";
+import {User} from "@/Utils/types.ts";
 
-type User = {
-    firstName: string;
-    lastName?:string
-    emailId:string
-    age?:number
-    gender?:string
-    photoUrl?: string;
-    about?:string
-    skills?:[string]
-}
 
 type EditProfileProps = {
     user:User

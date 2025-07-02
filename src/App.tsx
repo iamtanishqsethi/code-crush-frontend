@@ -1,17 +1,17 @@
 import {ThemeProvider} from "@/Components/Theme-Provider.tsx";
-import Landing from "@/Components/Landing.tsx";
+import Landing from "@/Components/Landing/Landing.tsx";
 import Body from "@/Components/Body.tsx";
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import Login from "@/Components/Login.tsx";
-import Profile from "@/Components/Profile.tsx";
-import Feed from "@/Components/Feed.tsx";
+import Profile from "@/Components/Profile/Profile.tsx";
+import Feed from "@/Components/Feed/Feed.tsx";
 import {Provider} from "react-redux";
 import appStore from "@/Utils/appStore.ts";
 import { Toaster } from "@/Components/ui/sonner"
 import ProtectedRoute from "@/Components/ProtectedRoute.tsx";
-import Connections from "@/Components/Connections.tsx";
-import Requests from "@/Components/Requests.tsx";
-import Chat from "@/Components/Chat.tsx";
+import Connections from "@/Components/Social/Connections.tsx";
+import Requests from "@/Components/Social/Requests.tsx";
+import Chat from "@/Components/Chat/Chat.tsx";
 
 function App() {
     const appRouter=createBrowserRouter([

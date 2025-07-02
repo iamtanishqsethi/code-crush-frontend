@@ -2,19 +2,15 @@ import axios from "axios";
 import {useDispatch, useSelector} from "react-redux";
 import {BASE_URL} from "@/Utils/constants.ts";
 import {useEffect} from "react";
-import {addConnections} from "@/Utils/connectionSlice.ts";
-import { Skeleton } from "@/Components/ui/skeleton"
-import EmptyConnections from "@/Components/EmptyConnections.tsx";
-import ConnectionItem from "@/Components/ConnectionItem.tsx";
+import {addConnections} from "@/Utils/slice/connectionSlice.ts";
+import { Skeleton } from "@/Components/ui/skeleton.tsx"
+import EmptyConnections from "@/Components/Social/EmptyConnections.tsx";
+import ConnectionItem from "@/Components/Social/ConnectionItem.tsx";
 import {Link} from "react-router";
+import {Connection} from "@/Utils/types.ts";
 
 
-type Connection={
-    firstName: string
-    lastName?:string
-    photoUrl: string
-    _id: string
-}
+
 
 
 

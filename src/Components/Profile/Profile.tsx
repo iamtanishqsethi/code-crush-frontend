@@ -1,23 +1,15 @@
-import {Avatar, AvatarFallback, AvatarImage,} from "./ui/avatar"
+import {Avatar, AvatarFallback, AvatarImage,} from "../ui/avatar.tsx"
 import {Badge} from "@/Components/ui/badge.tsx";
 import {Button} from "@/Components/ui/button.tsx";
 import { Pencil } from 'lucide-react';
 import { CardDescription, } from "@/Components/ui/card.tsx";
 import {useSelector} from "react-redux";
 import { useState ,useEffect} from "react";
-import EditProfile from "@/Components/EditProfile.tsx";
-import useFetchUser from "@/Utils/useFetchUser.ts";
+import EditProfile from "@/Components/Profile/EditProfile.tsx";
+import useFetchUser from "@/Utils/hooks/useFetchUser.ts";
+import {User} from "@/Utils/types.ts";
 
-type User = {
-    firstName: string;
-    lastName?:string
-    emailId:string
-    age?:number
-    gender?:string
-    photoUrl?: string;
-    about?:string
-    skills?:[string]
-}
+
 
 const Profile=()=>{
 

@@ -2,23 +2,12 @@ import axios from "axios";
 import {useDispatch, useSelector} from "react-redux";
 import {BASE_URL} from "@/Utils/constants.ts";
 import {useEffect} from "react";
-import {addRequests} from "@/Utils/requestSlice.ts";
+import {addRequests} from "@/Utils/slice/requestSlice.ts";
 import {Skeleton} from "@/Components/ui/skeleton.tsx";
-import RequestItem from "@/Components/RequestItem.tsx";
-import EmptyRequests from "@/Components/EmptyRequests.tsx";
+import RequestItem from "@/Components/Social/RequestItem.tsx";
+import EmptyRequests from "@/Components/Social/EmptyRequests.tsx";
 import {toast} from "sonner";
-
-type Request={
-    fromUserId:{
-        about: string
-        firstName: string
-        lastName?:string
-        photoUrl: string
-        _id: string
-    }
-    _id:string
-
-}
+import {Request} from "@/Utils/types.ts";
 
 
 const Requests=()=>{

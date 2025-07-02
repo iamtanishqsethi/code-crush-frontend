@@ -7,19 +7,14 @@ import {Button} from "@/Components/ui/button.tsx";
 import {useLocation, useNavigate} from "react-router-dom"
 import {useDispatch} from "react-redux"
 import  axios from "axios";
-import {removeUser} from "@/Utils/userSlice.ts";
+import {removeUser} from "@/Utils/slice/userSlice.ts";
 import { toast } from "sonner"
 import {useEffect, useState} from "react";
-import {removeFeed} from "@/Utils/feedSlice.ts";
+import {removeFeed} from "@/Utils/slice/feedSlice.ts";
 import {BASE_URL} from "@/Utils/constants.ts";
-
 import {Flame} from "lucide-react";
+import {User} from "@/Utils/types.ts";
 
-
-type User = {
-    firstName: string;
-    photoUrl?: string;
-}
 
 const NavBar=()=>{
     const navigate = useNavigate();

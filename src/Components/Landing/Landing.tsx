@@ -1,6 +1,6 @@
-import Hero from "@/Components/Hero.tsx";
-import Features from "@/Components/Features.tsx";
-import HowItWorks from "@/Components/HowItWorks.tsx";
+import Hero from "@/Components/Landing/Hero.tsx";
+import Features from "@/Components/Landing/Features.tsx";
+import HowItWorks from "@/Components/Landing/HowItWorks.tsx";
 
 const Landing = () => {
 

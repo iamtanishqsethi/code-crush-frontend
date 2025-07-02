@@ -9,28 +9,9 @@ import {Avatar, AvatarFallback, AvatarImage} from "@/Components/ui/avatar.tsx";
 import {Input} from "@/Components/ui/input.tsx";
 import {Send} from "lucide-react";
 import {toast} from "sonner";
+import {ChatObj, User} from "@/Utils/types.ts";
 
-type User = {
-    firstName: string;
-    lastName?: string
-    emailId: string
-    age?: number
-    gender?: string
-    photoUrl?: string;
-    about?: string
-    skills?: [string]
-    _id: string
-}
 
-type ChatObj = {
-    senderId: {
-        firstName: string,
-        lastName?: string,
-        photoUrl: string,
-        _id: string
-    }
-    text: string,
-}
 
 const Chat = () => {
     const user = useSelector((store: { user: User | null }) => store.user);

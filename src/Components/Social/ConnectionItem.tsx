@@ -1,5 +1,5 @@
-import { Avatar, AvatarFallback, AvatarImage } from "@/Components/ui/avatar";
-import { Card } from "@/Components/ui/card";
+import { Avatar, AvatarFallback, AvatarImage } from "@/Components/ui/avatar.tsx";
+import { Card } from "@/Components/ui/card.tsx";
 
 interface ConnectionProps {
     firstName: string;

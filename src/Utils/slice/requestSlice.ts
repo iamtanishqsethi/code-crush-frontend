@@ -1,17 +1,6 @@
 import {createSlice} from "@reduxjs/toolkit";
 import type { PayloadAction } from '@reduxjs/toolkit'
-
-type Request={
-    fromUserId:{
-        about: string
-        firstName: string
-        lastName?:string
-        photoUrl: string
-        _id: string
-    }
-    _id:string
-
-}
+import {Request} from "@/Utils/types.ts";
 
 const requestSlice = createSlice({
     name:"requests",

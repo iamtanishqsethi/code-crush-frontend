@@ -1,28 +1,16 @@
 import {Card, CardContent} from "@/Components/ui/card.tsx";
 import { Heart, X } from "lucide-react"
-import { Badge } from "@/Components/ui/badge"
+import { Badge } from "@/Components/ui/badge.tsx"
 import axios from "axios";
 import {BASE_URL} from "@/Utils/constants.ts";
 import {useDispatch} from "react-redux";
-import {removeUserFromFeed} from "@/Utils/feedSlice.ts";
+import {removeUserFromFeed} from "@/Utils/slice/feedSlice.ts";
+import {User} from "@/Utils/types.ts";
 
-type FeedData = {
-    _id: string
-    firstName: string
-    lastName?: string
-    photoUrl?: string
-    about?: string
-    skills: string[],
-    age?: number,
-    gender?: string
-}
 
 type FeedCardProps = {
-    item: FeedData
+    item: User
 }
-
-
-
 
 const FeedCard = ({ item }: FeedCardProps) => {
     const dispatch = useDispatch();
