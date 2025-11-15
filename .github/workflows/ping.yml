@@ -11,4 +11,4 @@ jobs:
     steps:
       - name: Curl Render backend
         run: |
-          curl -s https://code-crush-backend-32ww.onrender.com/ > /dev/null
+          curl -s https://code-crush-backend.onrender.com/ > /dev/null
